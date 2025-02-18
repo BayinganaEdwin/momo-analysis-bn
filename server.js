@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Sequelize } = require('sequelize');
 const transactionRoutes = require('./routes/transaction.routes');
@@ -42,6 +43,14 @@ async function ensureDatabaseExists() {
 }
 
 const app = express();
+
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+);
 
 app.use(bodyParser.json());
 
