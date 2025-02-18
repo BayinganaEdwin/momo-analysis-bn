@@ -29,10 +29,10 @@ async function ensureDatabaseExists() {
 
   try {
     await rootSequelize.query(`CREATE DATABASE ${process.env.DB_NAME}`);
-    console.log(`Database ${process.env.DB_NAME} created successfully.`);
+    console.log(`DB ${process.env.DB_NAME} created successfully.`);
   } catch (error) {
     if (error.original && error.original.code === '42P04') {
-      console.log(`Database ${process.env.DB_NAME} already exists.`);
+      console.log(`DB ${process.env.DB_NAME} already exists.`);
     } else {
       console.error('Error creating database:', error);
     }
@@ -44,6 +44,14 @@ async function ensureDatabaseExists() {
 const app = express();
 
 app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+  res.json({
+    message: '🚀 Welcome to the MoMo Transactions API! 🎉',
+    description: 'This API processes and analyzes MoMo transaction SMS data.',
+    usage: `Try visiting "https://docs.google.com/document/d/1fpGD4DSg94qVxoAMvrz340tpKdmQrtL1Rrq0kl21e0s/edit?tab=t.0" to explore more checkout more endpoints.`,
+  });
+});
 
 app.use('/api/transactions', transactionRoutes);
 
